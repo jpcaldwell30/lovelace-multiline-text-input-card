@@ -460,5 +460,5 @@
 		}
 	}
 
-	customElements.define('lovelace-multiline-text-input-card', LovelaceMultilineTextInput);
+	customElements.define('lovelace-multiline-text-input-card-attributes', LovelaceMultilineTextInput);
 })(window.LitElement || Object.getPrototypeOf(customElements.get("hui-masonry-view") || customElements.get("hui-view")));

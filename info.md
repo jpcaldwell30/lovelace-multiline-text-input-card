@@ -1,4 +1,4 @@
-# multiline-text-input-card
+# multiline-text-input-card-attributes
 
 This is a simple lovelace card to display a multiline text input field bound on an `input_text` or `var` entity.
 

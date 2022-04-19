@@ -270,7 +270,7 @@
 				let value = (typeof this.state.service_values[service] === 'function' ? this.state.service_values[service]() : this.state.service_values[service]);
 				if(this.state.service[service]) {
 					let _this = this;
-					this._hass.callService(this.state.entity_type, this.state.service[service], {entity_id: this.stateObj.entity_id, value: 'on', attributes: {"auth_url": value}}).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
+					this._hass.callService(this.state.entity_type, this.state.service[service], {entity_id: this.stateObj.entity_id, value: 'on', auth_url: value}).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
 				}
 			}
 		}

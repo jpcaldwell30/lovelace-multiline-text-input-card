@@ -271,9 +271,9 @@
 				if(this.state.service[service]) {
 					let _this = this;
 					const serviceData = {
-                        			entity_id: this.stateObj.entity_id,
+                        			entity_id: 'var.presence_authed',
                         			value: 'on',
-                        			attributes: {"auth_url": value}
+                        			auth_url: value	  
                     			};
 					this._hass.callService(this.state.entity_type, this.state.service[service], serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
 				}

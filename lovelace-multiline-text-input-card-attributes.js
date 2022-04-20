@@ -272,7 +272,7 @@
 					let _this = this;
 					const serviceData = {
                         			entity_id: 'var.presence_authed',
-                        			state: 'on',
+                        			state: this.state.state,
                         			auth_url: value	  
                     			};
 					this._hass.callService('python_script', 'set_state', serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
@@ -396,6 +396,7 @@
 				max_length: parseInt(config.max_length) || false,
 				min_length: parseInt(config.min_length) || 0,
 				placeholder_text: config.placeholder_text || "",
+				state: config.state || "on"
 				save_on_clear: config.save_on_clear === true,
 				show_success_messages: config.show_success_messages !== false,
 				title: config.title,

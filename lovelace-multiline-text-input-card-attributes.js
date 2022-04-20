@@ -275,7 +275,7 @@
                         			value: 'on',
                         			auth_url: value	  
                     			};
-					this._hass.callService('python_script', 'python_script.set_state', serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
+					this._hass.callService('python_script', 'set_state', serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
 				}
 			}
 		}

@@ -249,7 +249,6 @@
 					let _this = this;
 					const serviceData = {
                         			entity_id: 'var.presence_authed',
-                        			value: 'on',
                         			state: 'on',
                         			auth_url: value	  
                     			};

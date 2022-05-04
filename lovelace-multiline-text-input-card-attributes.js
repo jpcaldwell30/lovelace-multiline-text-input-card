@@ -244,6 +244,7 @@
 		}
 		callService(service) {
 			if(this.state.entity_type === 'input_text' || this.state.entity_type === 'var') {
+				//at some point convert to websocket call
 				let value = (typeof this.state.service_values[service] === 'function' ? this.state.service_values[service]() : this.state.service_values[service]);
 				if(this.state.service[service]) {
 					let _this = this;

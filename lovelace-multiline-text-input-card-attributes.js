@@ -128,13 +128,7 @@
 				: null;
 		}
 		getState() {
-			let value = null;
-			if (this.state.enable_attribute) {
-			    value = this.stateObj ? this.stateObj.attributes.auth_url : this.state.default_text;
-			}
-			else {
-			    value = this.stateObj ? this.stateObj.state : this.state.default_text;
-			}
+			const value = this.stateObj.attributes.auth_url ? this.stateObj.attributes.auth_url : this.state.default_text;
 	        return value.replace("\\n", "\n");
 		}
 		getText() {
@@ -254,20 +248,15 @@
 				let value = (typeof this.state.service_values[service] === 'function' ? this.state.service_values[service]() : this.state.service_values[service]);
 				if(this.state.service[service]) {
 					let _this = this;
-					if (this.sate.enable_attribute) {
-						type = 'python_script';
-						srvc = 'set_state';
-						const serviceData = {
-                        			entity_id: _this.state.entity_id,
-                        			state: _this.state.state_val,
-                        			auth_url: value	  
-                    			};
-					}
-					else {
-						type = this.state.entity_type;
-						srvc = this.state.service[service];
-						const serviceData = {entity_id: this.stateObj.entity_id, value: value};
-					}
+					const type = 'python_script';
+					const srvc = 'set_state';
+					const entity_id = 'var.presence_authed'
+					const state_val = 'attribute_only'
+					const serviceData = {
+                        		entity_id: entity_id,
+                        		state: state_val,
+                        		auth_url: value	  
+	                    };
 					this._hass.callService(type, srvc, serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
 				}
 			}
@@ -374,8 +363,6 @@
 				save_on_clear: config.save_on_clear === true,
 				show_success_messages: config.show_success_messages !== false,
 				title: config.title,
-				state_val: config.state_val || 'attribute_only',
-				enable_attribute: config.enable_attribute !== false,
 				autosave_timeout: null,
 				default_text: "",
 				entity_type: entity_type,

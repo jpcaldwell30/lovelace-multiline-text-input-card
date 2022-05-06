@@ -128,7 +128,8 @@
 				: null;
 		}
 		getState() {
-			if (this.sate.enable_attribute) {
+			let value = null;
+			if (this.state.enable_attribute) {
 			    value = this.stateObj ? this.stateObj.attributes.auth_url : this.state.default_text;
 			}
 			else {

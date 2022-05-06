@@ -128,8 +128,13 @@
 				: null;
 		}
 		getState() {
-			const value = this.stateObj ? this.stateObj.state : this.state.default_text;
-			return value.replace("\\n", "\n");
+			if (this.sate.enable_attribute) {
+			    value = this.stateObj ? this.stateObj.attributes.auth_url : this.state.default_text;
+			}
+			else {
+			    value = this.stateObj ? this.stateObj.state : this.state.default_text;
+			}
+	        return value.replace("\\n", "\n");
 		}
 		getText() {
 			return this.shadowRoot ? this.shadowRoot.querySelector(".textarea").value : "";
@@ -248,12 +253,21 @@
 				let value = (typeof this.state.service_values[service] === 'function' ? this.state.service_values[service]() : this.state.service_values[service]);
 				if(this.state.service[service]) {
 					let _this = this;
-					const serviceData = {
-                        			entity_id: 'var.presence_authed',
-                        			state: 'attribute_only',
+					if (this.sate.enable_attribute) {
+						type = 'python_script';
+						srvc = 'set_state';
+						const serviceData = {
+                        			entity_id: _this.state.entity_id,
+                        			state: _this.state.state_val,
                         			auth_url: value	  
                     			};
-					this._hass.callService('python_script', 'set_state', serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
+					}
+					else {
+						type = this.state.entity_type;
+						srvc = this.state.service[service];
+						const serviceData = {entity_id: this.stateObj.entity_id, value: value};
+					}
+					this._hass.callService(type, srvc, serviceData).then(function(response) { _this.displayMessage(service, true) }, function(error) { _this.displayMessage(service, false) });
 				}
 			}
 		}
@@ -269,7 +283,7 @@
 			let message = "";
 			if(success) {
 				if(service == "save") {
-					message = "The content has been saved.";
+					message = "The content has been saved. State updated";
 				}
 			}
 			else {
@@ -359,6 +373,8 @@
 				save_on_clear: config.save_on_clear === true,
 				show_success_messages: config.show_success_messages !== false,
 				title: config.title,
+				state_val: config.state_val || 'attribute_only',
+				enable_attribute: config.enable_attribute !== false,
 				autosave_timeout: null,
 				default_text: "",
 				entity_type: entity_type,
